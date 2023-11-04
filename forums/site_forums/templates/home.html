@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Post Title</th>
+      <th scope="col">User</th>
+      <th scope="col">Posted at</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% if posts %}
+        {% for post in posts %}
+            <tr>
+                <td><a href="{% url 'post' post.id %}">{{ post.id }}</a></td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.username }}</td>
+                <td>{{ post.created_at }}</td>
+            </tr>
+        {% endfor %}
+
+    {% endif %}
+
+	
+	  </tbody>
+	</table>
+
+
+{% else %}
+
+<div class="col-md-6 offset-md-3">
+<h1>Login</h1>
+<br/>
+
+<form method="POST" action="{% url 'home' %}">
+	{% csrf_token %}
+
+  <div class="mb-3">
+    <input type="text" class="form-control" name="username", placeholder="Username" required>
+    
+  </div><br/>
+  <div class="mb-3">
+    <input type="password" class="form-control" name="password", placeholder="Password" required>
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-secondary">Login</button>
+
+</form>
+
+
+
+{% endif %}
+
+{% endblock %}
