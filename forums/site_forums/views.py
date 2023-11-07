@@ -6,7 +6,7 @@ from .models import LoginUser, Comment, Post
 
 def home(request):
 	if request.user.is_authenticated:
-		posts = Post.objects.all()
+		posts = Post.objects.order_by('-id')
 		return render(request, 'home.html', {'posts':posts})
 	else:
 		return redirect('login')
